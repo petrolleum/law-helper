@@ -1,0 +1,32 @@
+{
+    law:{
+        {
+            num:1,
+            content:...
+        }，
+        {
+            num:2,
+            content:...
+        },
+        ......
+    }
+}
+
+{
+    data:
+    dir:{
+        {
+            num:
+            name:
+        },
+        {
+            num:
+            name:
+        }
+    }
+}
+
+post:
+num:
+type:若为down则请求后五条
+     若为up则请求前五条

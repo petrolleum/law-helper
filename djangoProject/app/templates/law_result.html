@@ -1,0 +1,36 @@
+<!-- law_query/templates/law_query/result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法条查询结果</title>
+</head>
+<body>
+    <h2>法条查询结果</h2>
+    {% if results %}
+        {%  for result in results %}
+         <p>{{ result.num }}</p>
+         <p>{{ result.content }}</p>
+         <p>{{ result.fact }}</p>
+        {%if result.fact%}
+        <p>触犯的相关法条：{{result.meta.relevant_articles}}</p>
+        <p>罪名：{{result.meta.accusation}}</p>
+        <p>罚款：{{result.meta.punish_of_money}}</p>
+         <p>罪犯：{{result.meta.criminals}}</p>
+            {% if result.meta.term_of_imprisonment.death_penalty == True %}
+            <p>判决：死刑</p>
+            {% elif result.meta.term_of_imprisonment.life_imprisonment == True%}
+            <p>判决：无期徒刑</p>
+            {% else %}
+            <p>判决：有期徒刑{{result.meta.term_of_imprisonment.life_imprisonment}}年</p>
+            {% endif %}
+        {% endif %}
+            <hr/>
+        {% endfor %}
+    {% else %}
+        <p>未找到相关法条。</p>
+    {% endif %}
+    <a href="{% url 'law_query' %}">返回查询</a>
+</body>
+</html>

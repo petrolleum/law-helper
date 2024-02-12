@@ -1,0 +1,30 @@
+<!-- law_query/templates/law_query/law_query.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法条查询</title>
+</head>
+<body>
+    <h2>法条查询</h2>
+    <form method="post" action="{% url 'law_query' %}">
+        {% csrf_token %}
+        <label for="law_content">法条内容:</label>
+        <input type="text" name="law_content" required>
+        <button type="submit">查询</button>
+    </form>
+     <form method="post" action="{% url 'law_query' %}">
+        {% csrf_token %}
+        <label for="law_number">法条编号:</label>
+        <input type="text" name="law_number" required>
+        <button type="submit">查询</button>
+    </form>
+    <form method="post" action="{% url 'law_query' %}">
+        {% csrf_token %}
+        <label for="fact_content">案件检索:</label>
+        <input type="text" name="fact_content" required>
+        <button type="submit">查询</button>
+    </form>
+</body>
+</html>
