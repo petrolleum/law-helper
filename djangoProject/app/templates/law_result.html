@@ -23,7 +23,7 @@
             {% elif result.meta.term_of_imprisonment.life_imprisonment == True%}
             <p>判决：无期徒刑</p>
             {% else %}
-            <p>判决：有期徒刑{{result.meta.term_of_imprisonment.life_imprisonment}}年</p>
+            <p>判决：有期徒刑{{result.meta.term_of_imprisonment.imprisonment}}年</p>
             {% endif %}
         {% endif %}
             <hr/>
