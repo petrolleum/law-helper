@@ -49,7 +49,7 @@ import { requestUrl } from "@/globalVar";
 export default {
   components: {
     ContentView,
-    ContentView,
+  
   },
   data() {
     return {

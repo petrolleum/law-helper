@@ -22,5 +22,6 @@ from app import views
 urlpatterns = [
     path('law_query/', views.law_query, name='law_query'),
     path('getLawByNum/',views.getLawByNum,name='getLawByNum'),
-    path('getLawByContent/',views.getLawByContent,name='getLawByContent')
+    path('getLawByContent/',views.getLawByContent,name='getLawByContent'),
+    path('getFactByKeyWord/',views.getFactByKeyWords,name='getFactByKeyWord')
 ]

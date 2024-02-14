@@ -22,8 +22,8 @@ def law_query(request):
         law_number = request.POST.get('law_number', '')
         law_content = request.POST.get('law_content','')
         fact_content = request.POST.get('fact_content','')
-        search = Search(index='law')
-        query = Match(num=law_number)
+        # search = Search(index='law')
+        # query = Match(num=law_number)
         if law_content:
             search = Search(index='law')
             query= Match(content=law_content)
@@ -35,7 +35,9 @@ def law_query(request):
             query=Match(fact=fact_content)
         response = search.query(query).execute()
         results=response.hits
-        print(results)
+        print(results[0]['meta'])
+        for key in results[0].meta:
+            print(key+":")
         return render(request, 'law_result.html',{'results':results})
     return render(request, 'law_query.html')
 
@@ -86,11 +88,49 @@ def getLawByContent(request):
             response = JsonResponse({'error':'错误'})
             response['Access-Control-Allow-Origin'] = '*'
             return response
-# def getCaseByKeyWords(request):
-#     if request.method=='POST':
-#         request_data = json.loads(request.body)
-#         factContent = request_data.get("fact_content")
-#         search = Search(index='law')
+
+def getFactByKeyWords(request):
+    if request.method=='POST':
+        request_data = json.loads(request.body)
+        factContent = request_data.get("fact_content")
+        search = Search(index='fact')
+        lawList=[]
+        if factContent:
+            query = Match(fact=factContent)
+            response = search.query(query).execute()
+            results = response.hits
+            if results:
+                print(len(results))
+                for result in results:
+                    term_of_imprisonment=''
+                    if result['meta']['term_of_imprisonment']['death_penalty'] == True:
+                        term_of_imprisonment='death'
+                    elif result['meta']['term_of_imprisonment']['life_imprisonment'] == True:
+                        term_of_imprisonment='life-imprisonment'
+                    else:
+                        term_of_imprisonment=str(result['meta']['term_of_imprisonment']['imprisonment'])
+
+                    tmp={'content':result.fact,
+                         'relevant_articles':json.dumps(list(result['meta']['relevant_articles'])),
+                         'accusation':json.dumps(list(result['meta']['accusation'])),
+                         'punish_of_money':result['meta']['punish_of_money'],
+                         'term_of_imprisonment':term_of_imprisonment
+                         }
+                    lawList.append(tmp)
+                    print(lawList)
+                response = JsonResponse({'fact': json.dumps(lawList)})
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
+            else:
+                response = JsonResponse({'error': "未找到相关案例"})
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
+        else:
+            response = JsonResponse({'error':'错误'})
+            response['Access-Control-Allow-Origin'] = '*'
+
+
+
 
 
 

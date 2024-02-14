@@ -22,6 +22,8 @@ export default {
     search() {
       // 在这里执行搜索操作，可以使用 this.searchQuery 来获取搜索关键词
       console.log("搜索：", this.searchQuery);
+      const paramValue = this.searchQuery;
+      this.$router.push({ path: '/caseView/'+paramValue });
     },
   },
 };
