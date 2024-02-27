@@ -13,7 +13,7 @@
             </div>
             <div>
                 <Pfcomponent name="案件查询" description="案件查询是本系统的辅助功能，使用BM25算法实现案件的检索，通过关键字检索案件" 
-                path="/cs" :img_url="this.logoUrl2"/>
+                path="/cv" :img_url="this.logoUrl2"/>
                 <Pfcomponent name="统计分析" description="对裁判文书进行数据分析，统计不同的法条在案件中的引用情况，以条形图的形式展现"
                 :img_url="this.logoUrl1"/>
             </div>

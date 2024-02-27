@@ -8,6 +8,7 @@ import AVue from '@/views/A.vue'
 import BVue from '@/views/B.vue'
 import CaseSearchVue from '@/components/CaseSearch.vue'
 import CaseView from '@/components/CaseView.vue'
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -41,13 +42,13 @@ const router = createRouter({
       component: LawColumn
     },
     {
-      path:'/cs',
-      name:'caseSearch',
-      component:CaseSearchVue
+      path:'/cv',
+      name:'caseView',
+      component:CaseView
     },
     {
       path:'/caseView/:param',
-      name:'caseView',
+      name:'caseView1',
       component:CaseView
     }
   ]
