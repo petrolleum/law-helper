@@ -2,7 +2,9 @@
 <template>
     <div>
         <div class="head-line1">
-            <span class="img-span"></span>
+            <span class="img-span">
+              <img :src="this.logoUrl" alt="Image">
+            </span>
             <span>
                 <div>法条推荐智能分析</div>
                 <div>Intelligent Legal Article Recommendation</div>
@@ -16,7 +18,14 @@
     </div>
 </template>
 <script>
+import { requestUrl } from '@/globalVar';
+
 export default{
+  data(){
+    return{
+      logoUrl:requestUrl+"/image/1.jpg/"
+    }
+  },
   methods: {
     toPf () {
       this.$router.push('/pf')

@@ -1,5 +1,6 @@
 export const requestUrl="http://127.0.0.1:8000"
 export const lawToRequestPerUpdate=10
+export const pageNum=10;
 export function getCharacter(num){
     var res="";
     if(num<100){

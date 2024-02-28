@@ -1,60 +1,51 @@
 <template>
   <div class="all">
-    <div class="title-inline">
-        案件详情：
+    <div>{{caseTitle}}</div>
+    <div>
+      <div>{{caseId}}</div>
+      <div>{{court}}</div>
+      <div>{{religion}}</div>
+      <div>{{caseType}}</div>
+      <div>{{proceeding}}</div>
     </div>
     <div>
-        {{ content }}
+      <div>案由：</div>
+      <div>{{reason}}</div>
     </div>
-  </div>
-  <div>
-    <div>
-      <div>
-        <div class="title-inline">罪名：</div>
-        <div v-for="item in accusation" class="item-inline">
-          {{ item }}
-        </div>
-      </div>
-      <div>
-        <div class="inline">
-          <div class="title-inline">罚款：</div>
-          <div class="item-inline">
-            {{ punish_of_money }}
-          </div>
-        </div>
-        <div class="inline" style="padding-left: 30px;">
-          <div class="title-inline">刑期：</div>
-          <div class="item-inline">{{ term_of_imprisonment }}</div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="title-inline">相关法条：</div>
-      <div v-for="item in relevant_articles" class="item-inline">
-        {{ item }}
-      </div>
-    </div>
+    <div>法条依据：</div>
   </div>
 </template>
 <script>
 export default {
   props: {
-    content: {
-      type: String,
-      required: true,
+    id:{
+      type:Number
     },
-    relevant_articles: {
-      required: true,
+    caseTitle:{
+      type:String
     },
-    accusation: {
-      required: true,
+    caseId:{
+      type:String
     },
-    punish_of_money: {
-      type: String,
-      required: true,
+    court:{
+      type:String
     },
-    term_of_imprisonment: {},
-  },
+    religion:{
+      type:String
+    },
+    caseType:{
+      type:Number
+    },
+    proceeding:{
+      type:String
+    },
+    reason:{
+      type:String
+    },
+    reference:{
+      type:String
+    }
+  }
 };
 </script>
 <style scoped>

@@ -1,9 +1,11 @@
 import json
-
+import os
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from elasticsearch_dsl import *
 from elasticsearch_dsl.query import *
+
+from djangoProject import settings
 
 connections.create_connection(hosts=['localhost'])
 
@@ -41,6 +43,7 @@ def law_query(request):
         return render(request, 'law_result.html',{'results':results})
     return render(request, 'law_query.html')
 
+<<<<<<< HEAD
 def judgement_query(request):
     if request.method == 'POST':
         judgement_content = request.POST.get('judgement_content','')
@@ -55,6 +58,18 @@ def judgement_query(request):
     return render(request, 'judgement_query.html')
 
 
+=======
+def getImageByUrl(request,image_name):
+    image_path =settings.STATIC_MEDIA+"/img/"+image_name
+
+    print("url"+image_path)
+
+    if os.path.exists(image_path):
+        with open(image_path, 'rb') as f:
+            return HttpResponse(f.read(), content_type='image/jpeg')  # 假设图片是 JPEG 格式的
+    else:
+        return HttpResponse('Image not found', status=404)
+>>>>>>> 1e0477ef07e0311f6c99431759115dfc5863e59e
 
 def getLawByNum(request):
     if request.method=="POST":

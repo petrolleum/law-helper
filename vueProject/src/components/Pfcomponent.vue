@@ -1,17 +1,34 @@
 <template>
 <div class="component-pf" @click="changeUrl">
-    <span>
-        <img :src="['img-url']" alt="">
+    <span class="inline">
+        <img :src="this.img_url" alt="Image">
     </span>
-    <span>
-        <div class="name-div">{{name}}</div>
-        <div class="des-div">{{description}}</div>
+    <span class="inline">
+        <div class="name-div">{{this.name}}</div>
+        <div class="des-div">{{this.description}}</div>
     </span>
 </div>
 </template>
 <script>
 export default{
-  props: ['name', 'description', 'img-url', 'path'],
+  props: {
+    name:{
+      type:String,
+      required:true
+    },
+    description:{
+      type:String,
+      required:true
+    },
+    path:{
+      type:String,
+      required:true
+    },
+    img_url:{
+      type:String,
+      
+    }
+  },
   methods: {
     changeUrl () {
       this.$router.push(this.path)
@@ -22,9 +39,12 @@ export default{
 
 </script>
 <style>
+.inline{
+  display: inline-block;
+}
 .component-pf{
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
     padding-right: 100px;
     padding-bottom: 50px;
     width: 500px;

@@ -21,8 +21,12 @@ from app import views
 
 urlpatterns = [
     path('law_query/', views.law_query, name='law_query'),
+<<<<<<< HEAD
     path('judgement_query/', views.judgement_query, name='judgement_query'),
 
+=======
+    path('image/<str:image_name>/', views.getImageByUrl, name='getImageByUrl'),
+>>>>>>> 1e0477ef07e0311f6c99431759115dfc5863e59e
     path('getLawByNum/',views.getLawByNum,name='getLawByNum'),
     path('getLawByContent/',views.getLawByContent,name='getLawByContent'),
     path('getFactByKeyWord/',views.getFactByKeyWords,name='getFactByKeyWord')

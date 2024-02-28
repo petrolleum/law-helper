@@ -8,6 +8,7 @@
         @keyup.enter="search"
       />
     </div>
+    
   </div>
 </template>
 
@@ -23,6 +24,7 @@ export default {
       // 在这里执行搜索操作，可以使用 this.searchQuery 来获取搜索关键词
       console.log("搜索：", this.searchQuery);
       const paramValue = this.searchQuery;
+      this.$emit('searchEvent',this.searchQuery);
       this.$router.push({ path: '/caseView/'+paramValue });
     },
   },
@@ -34,7 +36,7 @@ export default {
     display: flex;
     justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
-  height: 100vh; /* 使容器铺满整个视口高度 */
+  height: 100px; /* 使容器铺满整个视口高度 */
 }
 .search-box {
   width: 800px; /* 设定搜索框的宽度 */
