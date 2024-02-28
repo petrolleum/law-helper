@@ -1,0 +1,26 @@
+<!-- law_query/templates/law_query/result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法条查询结果</title>
+</head>
+<body>
+    <h2>法条查询结果</h2>
+    {%  for result in results %}
+    <p>id：{{result.id}}</p>
+    <p>案件名称：{{result.caseTitle}}</p>
+    <p>案件名称：{{result.caseId}}</p>
+    <p>案件类型：{{result.caseType}}</p>
+    <p>法院：{{result.court}}</p>
+    <p>审理程序：{{result.proceding}}</p>
+    <p>法律依据：{{result.reference}}</p>
+    <p>案由：{{result.caseReason}}</p>
+    <p>判决时间：{{result.judgementTime}}</p>
+    <p>全文：{{result.content}}</p>
+    <hr/>
+    {% endfor %}
+    <a href="{% url 'judgement_query' %}">返回查询</a>
+</body>
+</html>

@@ -41,6 +41,21 @@ def law_query(request):
         return render(request, 'law_result.html',{'results':results})
     return render(request, 'law_query.html')
 
+def judgement_query(request):
+    if request.method == 'POST':
+        judgement_content = request.POST.get('judgement_content','')
+        # search = Search(index='judgement')
+        # query = Match(num=judgement_number)
+        if judgement_content:
+            search = Search(index='judgement')
+            query= Match(content=judgement_content)
+            response = search.query(query).execute()
+            results=response.hits
+            return render(request, 'judgement_result.html',{'results':results})
+    return render(request, 'judgement_query.html')
+
+
+
 def getLawByNum(request):
     if request.method=="POST":
         request_data = json.loads(request.body)
