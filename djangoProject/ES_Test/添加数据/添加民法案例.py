@@ -43,7 +43,7 @@ Laws.init()
 
 num=0
 import pandas as pd
-df_judgement=pd.read_csv("E:\BaiduNetdiskDownload\judgement.csv")
+df_judgement=pd.read_csv("D:\judgement.csv")
 for row_no,row in df_judgement.iterrows():
     if pd.notna(row.案件名称) and pd.notna(row.案号) and pd.notna(row.法院) and pd.notna(row.案件类型) and pd.notna(row.审理程序) and pd.notna(row.法律依据)and pd.notna(row.案由)and pd.notna(row.全文):
         law=Laws(

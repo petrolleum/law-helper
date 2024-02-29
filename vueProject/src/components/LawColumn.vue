@@ -1,5 +1,7 @@
 <template>
-  <div class="all-lc">
+  <div>
+    <div style="background-color: rgb(204, 204, 204);height: 20px;"></div>
+    <div class="all-lc">
     <div class="container-dir">
       <div class="law-title">
         <div
@@ -39,6 +41,7 @@
     <div class="container-content">
       <ContentView :selectedLaw="this.selectedLaw" :selectedContent="this.selectedContent"/>
     </div>
+  </div>
   </div>
 </template>
 

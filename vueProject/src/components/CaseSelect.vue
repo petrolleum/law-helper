@@ -1,104 +1,125 @@
 <template>
-  <div>
-    <CaseViewComponent
+  <div class="container">
     
-    />
-    <!-- <div v-if="this.haveData">
-      <div v-for="item in caseData" :key="content">
+    <div v-if="this.haveData">
+      <div v-for="item in caseData" class="subContainer">
         <CaseViewComponent
-          :content="item.content"
-          :relevant_articles="item.relevant_articles"
-          :accusation="item.deAccusation"
-          :punish_of_money="item.punish_of_money"
-          :term_of_imprisonment="item.term_of_imprisonment"
+          :id="item.id"
+          :caseTitle="item.caseTitle"
+          :caseId="item.caseId"
+          :court="item.court"
+          :religion="item.religion"
+          :caseType="item.caseType"
+          :proceeding="item.proceding"
+          :reason="item.caseReason"
+          :reference="item.reference"
+          :judgementTime="item.judgementTime"
         />
+        <div style="height: 30px;"></div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
-<script>
+<script scoped>
 import axios from "axios";
 import CaseViewComponent from "./CaseViewComponent.vue";
-import { requestUrl } from "@/globalVar";
+import { number_max, requestUrl } from "@/globalVar";
 import CaseSearch from "./CaseSearch.vue";
 
 export default {
   components: {
     CaseViewComponent,
     CaseSearch,
-},
+  },
   props: {
-    caseType: {
-      type: Number,
-      required: true,
-    },
     searchContent: {
       type: String,
     },
-    curPage:{
-        type:Number
+    curPage: {
+      type: String,
     },
   },
-  mounted(){
-    // this.requestCase(1,1);
+  mounted() {
+    
+    this.requestCase(this.type1,1);
   },
-  watch:{
-    caseType(newValue,oldValue){
-        this.requestCase(this.caseType,1);
+  watch: {
+  
+    searchContent(newValue, oldValue) {
+      this.requestCase('bySearch',this.page1,this.searchContent)
     },
-    searchContent(newValue,oldValue){
-        this.search(this.searchContent,1);
+    curPage(newValue, oldValue) {   
+    this.type1=this.curPage.split(';')[0];
+    this.page1=Number(this.curPage.split(';')[1]);
+    console.log(this.page1);
+    this.requestCase(this.type1,this.page1,'');
     },
-    curPage(newValue,oldValue){
-        if(caseType==0){
-            this.search(this.searchContent,this.curPage);
-        }else{
-            this.requestCase(this.caseType,this.curPage);
-        }
-    }
+    
   },
   data() {
     return {
       caseData: [],
-      haveData: false,
+      haveData:0,
+      type1:"刑事案件",//这里的type1是type，上面的curPage是type+page
+      page1:1//这里的page1是page，上面的curPage是type+page
     };
   },
   methods: {
-    search(factContent,page) {
-      var requestParam = { fact_content: caseContent };
-      axios
-        .post(requestUrl + "/getFactByKeyWord/", requestParam)
-        .then((response) => {
-          const responseData = response.data.fact;
-          const jsonArray = JSON.parse(responseData);
-          for (var i = 0; i < jsonArray.length; i++) {
-            jsonArray[i].deAccusation = [];
-            jsonArray[i].accusation = JSON.parse(jsonArray[i].accusation);
-            jsonArray[i].relevant_articles = JSON.parse(
-              jsonArray[i].relevant_articles
-            );
-            for (let j = 0; j < jsonArray[i].accusation.length; j++) {
-              console.log(jsonArray[i].accusation[j]);
-              const decodedString = unescape(jsonArray[i].accusation[j]);
-              console.log(decodedString);
-              jsonArray[i].deAccusation.push(decodedString);
-              console.log(jsonArray[i].deAccusation[j]);
-            }
-            this.factData.push(jsonArray[i]);
-          }
-          this.haveData = true;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  requestCase(type, page,searchContent) {
+    var requestParam = { caseType: type, page: page ,searchContent:searchContent};
+    axios
+      .post(requestUrl + "/getJudgements/", requestParam)
+      .then((response) => {
+        this.caseData=[];
+        this.haveData=1;
+        const responseData = response.data.judgements;
+        const totalData=response.data.total;
+
+        this.$emit('totalPageEvent',totalData);
+        const jsonArray = JSON.parse(responseData);
+        for (var i = 0; i < jsonArray.length; i++) {
+          jsonArray[i].deAccusation = [];
+          jsonArray[i].reference = JSON.parse(jsonArray[i].reference);
+          jsonArray[i].caseReason = JSON.parse(jsonArray[i].caseReason);
+          this.caseData.push(jsonArray[i]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
-  requestCase(type,page){
+  requestCaseByContent(content,page){
+    var requestParam = { contentToSearch: content, page: page };
+    axios
+      .post(requestUrl + "/getJudgementsByContent/", requestParam)
+      .then((response) => {
+        this.caseData=[];
+        this.haveData=1;
+        const responseData = response.data.judgements;
+        const totalData=response.data.total;
+
+        this.$emit('totalPageEvent',totalData);
+        const jsonArray = JSON.parse(responseData);
+        for (var i = 0; i < jsonArray.length; i++) {
+          jsonArray[i].deAccusation = [];
+          jsonArray[i].reference = JSON.parse(jsonArray[i].reference);
+          jsonArray[i].caseReason = JSON.parse(jsonArray[i].caseReason);
+          this.caseData.push(jsonArray[i]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  requestNum(type) {
 
   },
-  requestNum(type){
-
-  }
-};
+}
+}
 </script>
-<style></style>
+<style scoped>
+.container {
+  background-color: #f2f2f2;
+}
+
+</style>

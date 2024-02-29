@@ -8,6 +8,7 @@ import AVue from '@/views/A.vue'
 import BVue from '@/views/B.vue'
 import CaseSearchVue from '@/components/CaseSearch.vue'
 import CaseView from '@/components/CaseView.vue'
+import CaseDetailVue from '@/components/CaseDetail.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -46,10 +47,11 @@ const router = createRouter({
       name:'caseView',
       component:CaseView
     },
+    
     {
-      path:'/caseView/:param',
-      name:'caseView1',
-      component:CaseView
+      path:'/detail/:id',
+      name:'caseDetail',
+      component:CaseDetailVue
     }
   ]
 })

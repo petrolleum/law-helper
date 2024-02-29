@@ -1,32 +1,11 @@
 {
-    law:{
-        {
-            num:1,
-            content:...
-        }，
-        {
-            num:2,
-            content:...
-        },
-        ......
-    }
+    id:,
+    caseTitle(案件名称):,
+    caseId(案号):,
+    court(法庭):,
+    religion(地区):,
+    caseType(案件类型):,
+    proceding(审理阶段):
+    reference(法律依据):
+    content(全文):
 }
-
-{
-    data:
-    dir:{
-        {
-            num:
-            name:
-        },
-        {
-            num:
-            name:
-        }
-    }
-}
-
-post:
-num:
-type:若为down则请求后五条
-     若为up则请求前五条

@@ -9,6 +9,8 @@ from djangoProject import settings
 
 connections.create_connection(hosts=['localhost'])
 
+total_hits=0
+
 def search_query(search,query,columns):
     s=search.query(query)
     response=s.execute()
@@ -43,7 +45,7 @@ def law_query(request):
         return render(request, 'law_result.html',{'results':results})
     return render(request, 'law_query.html')
 
-<<<<<<< HEAD
+
 def judgement_query(request):
     if request.method == 'POST':
         judgement_content = request.POST.get('judgement_content','')
@@ -58,7 +60,7 @@ def judgement_query(request):
     return render(request, 'judgement_query.html')
 
 
-=======
+
 def getImageByUrl(request,image_name):
     image_path =settings.STATIC_MEDIA+"/img/"+image_name
 
@@ -69,7 +71,7 @@ def getImageByUrl(request,image_name):
             return HttpResponse(f.read(), content_type='image/jpeg')  # 假设图片是 JPEG 格式的
     else:
         return HttpResponse('Image not found', status=404)
->>>>>>> 1e0477ef07e0311f6c99431759115dfc5863e59e
+
 
 def getLawByNum(request):
     if request.method=="POST":
@@ -158,6 +160,97 @@ def getFactByKeyWords(request):
         else:
             response = JsonResponse({'error':'错误'})
             response['Access-Control-Allow-Origin'] = '*'
+
+def getJudgements(request):
+    if(request.method=='POST'):
+        request_data = json.loads(request.body)
+        judgement_type=request_data.get('caseType')
+        curPage=request_data.get('page')
+        searchContent=request_data.get('searchContent')
+        judgement_list=[]
+
+        if judgement_type!='bySearch' and judgement_type:
+            query = Match(caseType=judgement_type)
+            response=Search(index="judgement").query(query).extra(size=10,from_=10*(curPage)).execute()
+
+            results=response.hits
+            total_hits = results.total.value
+            if results:
+                print(results[0]['caseReason'])
+                for result in results:
+                    reference=result.reference.split('；')
+                    caseReason=result.caseReason.split('、')
+                    tmp={'id':result.id,
+                         'caseTitle':result.caseTitle,
+                         'caseId':result.caseId,
+                         'court':result.court,
+                         'caseType':result.caseType,
+                         'proceeding':result.proceding,
+                         'reference':json.dumps(reference),
+                         'caseReason':json.dumps(caseReason),
+                         'judgementTime':result.judgementTime
+                         }
+                    judgement_list.append(tmp)
+                response = JsonResponse({'judgements': json.dumps(judgement_list),'total':total_hits})
+                print(len(results))
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
+        elif judgement_type=='bySearch':
+            query = Match(caseReason=searchContent)
+            response = Search(index="judgement").query(query).extra(size=10, from_=10 * (curPage)).execute()
+
+            results = response.hits
+            total_hits = results.total.value
+            if results:
+                print(results[0]['caseReason'])
+                for result in results:
+                    reference = result.reference.split('；')
+                    caseReason = result.caseReason.split('、')
+                    tmp = {'id': result.id,
+                           'caseTitle': result.caseTitle,
+                           'caseId': result.caseId,
+                           'court': result.court,
+                           'caseType': result.caseType,
+                           'proceeding': result.proceding,
+                           'reference': json.dumps(reference),
+                           'caseReason': json.dumps(caseReason),
+                           'judgementTime': result.judgementTime
+                           }
+                    judgement_list.append(tmp)
+                response = JsonResponse({'judgements': json.dumps(judgement_list), 'total': total_hits})
+                print(len(results))
+                response['Access-Control-Allow-Origin'] = '*'
+                return response
+    response = JsonResponse({'error': "未找到相关案例"})
+    response['Access-Control-Allow-Origin'] = '*'
+    return response
+
+def getJudgement(request):
+    if request.method=='POST':
+        request_data = json.loads(request.body)
+        id=request_data.get('id')
+        if id:
+            query=Match(id=id)
+            response=Search(index='judgement').query(query).execute()
+            result=response.hits[0]
+            reference = result.reference.split('；')
+            caseReason = result.caseReason.split('、')
+            response=JsonResponse({'id':result.id,
+                                   'caseTitle':result.caseTitle,
+                                   'caseId':result.caseId,
+                                   'court':result.court,
+                                   'judgementTime':result.judgementTime,
+                                   'caseType':result.caseType,
+                                   'proceeding':result.proceding,
+                                   'reference': json.dumps(reference),
+                                   'caseReason': json.dumps(caseReason),
+                                   'content':result.content
+                                   })
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
+
+
+
 
 
 
