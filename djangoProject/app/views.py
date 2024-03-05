@@ -204,6 +204,7 @@ def getJudgements(request):
             total_hits = results.total.value
             if results:
                 print(results[0]['caseReason'])
+                print(results[0]['caseTitle'])
                 for result in results:
                     reference = result.reference.split('；')
                     caseReason = result.caseReason.split('、')
@@ -219,7 +220,7 @@ def getJudgements(request):
                            }
                     judgement_list.append(tmp)
                 response = JsonResponse({'judgements': json.dumps(judgement_list), 'total': total_hits})
-                print(len(results))
+
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
     response = JsonResponse({'error': "未找到相关案例"})
