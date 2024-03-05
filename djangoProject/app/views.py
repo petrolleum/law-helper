@@ -196,6 +196,7 @@ def getJudgements(request):
                 response['Access-Control-Allow-Origin'] = '*'
                 return response
         elif judgement_type=='bySearch':
+            print(11111111111)
             query = Match(caseReason=searchContent)
             response = Search(index="judgement").query(query).extra(size=10, from_=10 * (curPage)).execute()
 
@@ -235,6 +236,59 @@ def getJudgement(request):
             result=response.hits[0]
             reference = result.reference.split('；')
             caseReason = result.caseReason.split('、')
+
+            if result.content.find('审判长')!=-1 :
+                content_all = result.content.split('审判长')
+                print(content_all)
+                content = content_all[0]
+                judge = content_all[1]
+
+                if judge.find('更多数据') != -1:
+                    judge = judge.split('更多数据')[0]
+                elif judge.find('来源') != -1:
+                    judge = judge.split('来源')[0]
+                elif judge.find('来自') != -1:
+                    judge = judge.split('来自')[0]
+                elif judge.find('微信公众号') != -1:
+                    judge = judge.split('微信公众号')[0]
+                elif judge.find('搜索') != -1:
+                    judge = judge.split('搜索')[0]
+            elif result.content.find('审 判 长')!=-1:
+                content_all = result.content.split('审判员')
+                print(content_all)
+                content = content_all[0]
+                judge = content_all[1]
+
+                if judge.find('更多数据') != -1:
+                    judge = judge.split('更多数据')[0]
+                elif judge.find('来源') != -1:
+                    judge = judge.split('来源')[0]
+                elif judge.find('来自') != -1:
+                    judge = judge.split('来自')[0]
+                elif judge.find('微信公众号') != -1:
+                    judge = judge.split('微信公众号')[0]
+                elif judge.find('搜索') != -1:
+                    judge = judge.split('搜索')[0]
+            elif result.content.find('审判员')!=-1:
+                content_all = result.content.split('审判员')
+                print(content_all)
+                content = content_all[0]
+                judge = content_all[1]
+
+                if judge.find('更多数据') != -1:
+                    judge = judge.split('更多数据')[0]
+                elif judge.find('来源') != -1:
+                    judge = judge.split('来源')[0]
+                elif judge.find('来自') != -1:
+                    judge = judge.split('来自')[0]
+                elif judge.find('微信公众号') != -1:
+                    judge = judge.split('微信公众号')[0]
+                elif judge.find('搜索') != -1:
+                    judge = judge.split('搜索')[0]
+            else:
+                content=result.content
+                judge=''
+
             response=JsonResponse({'id':result.id,
                                    'caseTitle':result.caseTitle,
                                    'caseId':result.caseId,
@@ -244,7 +298,8 @@ def getJudgement(request):
                                    'proceeding':result.proceding,
                                    'reference': json.dumps(reference),
                                    'caseReason': json.dumps(caseReason),
-                                   'content':result.content
+                                   'content':content,
+                                   'judge':judge
                                    })
             response['Access-Control-Allow-Origin'] = '*'
             return response

@@ -7,15 +7,22 @@
       <div class="detail-inline">{{ judgementTime }}</div>
       <div class="detail-inline">{{ caseType }}</div>
       <div class="detail-inline">{{ proceeding }}</div>
-      
     </div>
-    <div class="reason">
-      <div class="reason-inline">案由：</div>
-      <div class="reason-inline" v-for="item in reason">{{item}}</div>
+    <div class="inline-container">
+      <div class="inline-title">案由：</div>
+      <div
+        class="inline"
+        v-for="item in reason"
+        style="background-color: lightgrey;color: grey;"
+      >
+        {{ item }}
+      </div>
     </div>
-    <div class="reference" v-for="item in reference">
-      <div class="reference-inline">法条依据：</div>
-          <div class="reference-inline">{{ item }}</div>
+    <div class="inline-container" v-for="item in reference">
+      <div class="inline-title">法条依据：</div>
+      <div class="inline" >
+        {{ item }}
+      </div>
     </div>
   </div>
 </template>
@@ -49,16 +56,15 @@ export default {
     reference: {
       type: Array,
     },
-    judgementTime:{
-      type:String
+    judgementTime: {
+      type: String,
     },
-
   },
-  methods:{
-    toDetail(){
-      this.$router.push('/detail/'+this.id.toString());
-    }
-  }
+  methods: {
+    toDetail() {
+      this.$router.push("/detail/" + this.id.toString());
+    },
+  },
 };
 </script>
 <style scoped>
@@ -86,20 +92,19 @@ export default {
   padding-right: 20px;
   border-right: 1px solid black;
 }
-.reason {
+.inline-container {
   display: flex;
   justify-content: flex-start;
   gap: 20px;
 }
-.reason-inline {
+.inline {
+  display: inline-block;
+}
+.inline-title {
   display: inline-block;
   background-color: lightblue;
+  color: blue;
 }
-.reference {
 
-}
-.reference-inline {
-  display: inline-block;
-  background-color: lightblue;
-}
+
 </style>
