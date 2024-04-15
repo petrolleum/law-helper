@@ -11,7 +11,7 @@
     </template>
 <script>
 export default{
-  props: ['name', 'description', 'img-url']
+  props: ['name', 'description', 'img_url']
 }
 </script>
     <style>

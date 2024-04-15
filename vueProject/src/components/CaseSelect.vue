@@ -73,8 +73,8 @@ export default {
         this.caseData=[];
         this.haveData=1;
         const responseData = response.data.judgements;
+        console.log(responseData);
         const totalData=response.data.total;
-
         this.$emit('totalPageEvent',totalData);
         const jsonArray = JSON.parse(responseData);
         for (var i = 0; i < jsonArray.length; i++) {

@@ -3,7 +3,7 @@
     <div class="search-box">
       <input
         type="text"
-        placeholder="在百度中搜索"
+        placeholder="在数据库中搜索"
         v-model="searchQuery"
         @keyup.enter="search"
       />
@@ -25,7 +25,7 @@ export default {
       console.log("搜索：", this.searchQuery);
       const paramValue = this.searchQuery;
       this.$emit('searchEvent',this.searchQuery);
-      this.$router.push({ path: '/caseView/'+paramValue });
+      // this.$router.push({ path: '/caseView/'+paramValue });
     },
   },
 };

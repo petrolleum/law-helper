@@ -17,16 +17,7 @@ const router = createRouter({
       path: '/',
       redirect: '/lp' // 重定向到你想要的默认路由，比如 LawPrediction 组件
     },
-    {
-      path: '/a',
-      name: 'App',
-      component: AVue
-    },
-    {
-      path: '/b',
-      name: 'HelloWorld',
-      component: BVue
-    },
+    
     {
       path: '/lp',
       name: 'lp',
@@ -47,7 +38,10 @@ const router = createRouter({
       name:'caseView',
       component:CaseView
     },
-    
+    {
+      path:'/caseView',
+      
+    },
     {
       path:'/detail/:id',
       name:'caseDetail',

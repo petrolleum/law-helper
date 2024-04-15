@@ -242,7 +242,9 @@ def getJudgement(request):
                 content_all = result.content.split('审判长')
                 print(content_all)
                 content = content_all[0]
-                judge = content_all[1]
+                judge = ''
+                if (content_all != None):
+                    judge = content_all[1]
 
                 if judge.find('更多数据') != -1:
                     judge = judge.split('更多数据')[0]
@@ -258,8 +260,9 @@ def getJudgement(request):
                 content_all = result.content.split('审判员')
                 print(content_all)
                 content = content_all[0]
-                judge = content_all[1]
-
+                judge=''
+                if(content_all!=None):
+                    judge=content_all[1]
                 if judge.find('更多数据') != -1:
                     judge = judge.split('更多数据')[0]
                 elif judge.find('来源') != -1:
@@ -274,7 +277,9 @@ def getJudgement(request):
                 content_all = result.content.split('审判员')
                 print(content_all)
                 content = content_all[0]
-                judge = content_all[1]
+                judge = ''
+                if (content_all != None):
+                    judge = content_all[1]
 
                 if judge.find('更多数据') != -1:
                     judge = judge.split('更多数据')[0]
